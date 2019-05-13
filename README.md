@@ -1,5 +1,20 @@
 # game_of_life
 
+## Demo Screenshot
+[placeholder] live demo link
+
+## Install & Run
+
+```
+# install
+$ yarn
+
+# run it locally
+$ yarn run watch
+```
+
+
+## Basic Rules
 - Given a board with m by n cells, each cell has an initial state live (1) or dead (0).
 - Each cel interacts with its 8 neighbors using the following 4 rules:
     - 1) any live cell with fewer than 2 live eighbors dies, as if caused by under-population

@@ -5,8 +5,8 @@
 
 ## Install & Run
 
-```
-# install
+```bash
+##install
 $ yarn
 
 # run it locally

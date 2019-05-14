@@ -1,28 +1,22 @@
-const boardSize = 600;
-const rowCells = 40;
-const cellSize = boardSize / rowCells;
-const cellStrokeColor = 'teal';
-const cellFillColor = 'lightSkyBlue';
-const framesPerSecond = 10;
-
 const getRandomGrid = () => {
-    const grid = new Array(rowCells);
-    for (let i = 0; i < grid.length; i++) {
-        grid[i] = new Array(rowCells);
-        for (let j = 0; j < grid.length; j++) {
+    const len = rowCells.value;
+    const grid = new Array(len);
+    for (let i = 0; i < len; i++) {
+        grid[i] = new Array(len);
+        for (let j = 0; j < len; j++) {
             grid[i][j] = Math.floor(Math.random()*2);
         }
     }
     return grid;
 };
 
-const drawGrid = (ctx, grid) => {
-    ctx.strokeStyle = cellStrokeColor;
+const drawGrid = (ctx, grid, cellSize) => {
+    ctx.strokeStyle = cellStrokeColor.value;
     for (let i = 0; i < grid.length; i++) {
-        for (let j = 0; j < grid[0].length; j++) {
+        for (let j = 0; j < grid.length; j++) {
             const currVal = grid[i][j];
             if (currVal) {
-                ctx.fillStyle = cellFillColor;
+                ctx.fillStyle = cellFillColor.value;
                 ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
             }
             ctx.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
@@ -63,18 +57,39 @@ const getNextGenGrid = (grid) => {
     return nextGrid;
 };
 
-const generation = (ctx, grid) => {
+const generation = (ctx, grid, boardSize, cellSize, framesPerSecond) => {
     ctx.clearRect(0, 0, boardSize, boardSize);
-    drawGrid(ctx, grid);
+    drawGrid(ctx, grid, cellSize);
     const nextGenrationGrid = getNextGenGrid(grid);
-    setTimeout(() => {
-        requestAnimationFrame(() => generation(ctx, nextGenrationGrid))
-    }, 1000/ framesPerSecond);
+    requestAnimationFrame(() => generation(ctx, nextGenrationGrid, boardSize, cellSize, framesPerSecond))
 };
 
-window.onload = () => {
+const paint = () => {
+    const boardSize = parseInt(document.getElementById('boardSizeInput').value);
+    const rowCells = parseInt(document.getElementById('rowCells').value);
+    const cellSize = boardSize / rowCells;
+    const cellStrokeColor = (document.getElementById('cellStrokeColor').value);
+    const cellFillColor = (document.getElementById('cellFillColor').value);
+    const framesPerSecond = (document.getElementById('framesPerSecond').value);;
+
+    // actual paint
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+    console.log(rowCells);
     const grid = getRandomGrid();
-    generation(ctx, grid);
+    generation(ctx, grid, boardSize, cellSize, framesPerSecond);
 };
+
+window.onload = paint;
+
+window.onresize = () => {
+    const ctx = canvas.getContext('2d');
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+};
+
+document.addEventListener('input', e => {
+    if (e.target.matches('input')) {
+        paint();
+    }
+});

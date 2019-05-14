@@ -23,4 +23,5 @@ $ yarn run watch
     - 4) any dead cell with exactly 3 live neighbours becomes a live cell, as if by reproduction
 
 ## TODO for next weekend
-- adding the ctrl menu for framePerSecond, colour, boardSize, cellSize, starting shapes
+- fix the style for ctrl menu [framePerSecond, colour, boardSize, cellSize, starting shapes]
+- more responsive

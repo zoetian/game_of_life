@@ -61,13 +61,12 @@ const generation = (ctx, grid, boardSize, cellSize, fps) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid(ctx, grid, cellSize);
     const nextGenrationGrid = getNextGenGrid(grid);
-    console.log('[curr fps] ', fps);
-    requestAnimationFrame(() => generation(ctx, nextGenrationGrid, boardSize, cellSize, fps))
+    console.log('[out fps] ', fps);
 
-    // setTimeout(() => {
-    //     requestAnimationFrame(() => generation(ctx, nextGenrationGrid, boardSize, cellSize, fps))
-    //     console.log('[curr fps] ', fps);
-    // }, 1000/ fps);
+    setTimeout(() => {
+        console.log('[in fps] ', fps);
+        requestAnimationFrame(() => generation(ctx, nextGenrationGrid, boardSize, cellSize, fps))
+    }, 1000/ fps);
 };
 
 const paint = () => {
@@ -93,8 +92,17 @@ window.onresize = () => {
     ctx.canvas.height = window.innerHeight;
 };
 
+var timeout = null;
 document.addEventListener('input', e => {
     if (e.target.matches('input')) {
-        paint();
+        e.target.onkeyup = (e) => {
+            clearTimeout(timeout);
+            // Make a new timeout set to go off in 800ms
+            timeout = setTimeout(function () {
+                console.log('Input Value:', e.target.value);
+                console.log('xxxxxxxx shall repaint xxxxxxxxxxx');
+                paint();
+            }, 800);
+        };
     }
 });

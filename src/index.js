@@ -58,7 +58,7 @@ const getNextGenGrid = (grid) => {
 };
 
 const generation = (ctx, grid, boardSize, cellSize, framesPerSecond) => {
-    ctx.clearRect(0, 0, boardSize, boardSize);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid(ctx, grid, cellSize);
     const nextGenrationGrid = getNextGenGrid(grid);
     requestAnimationFrame(() => generation(ctx, nextGenrationGrid, boardSize, cellSize, framesPerSecond))
@@ -75,7 +75,6 @@ const paint = () => {
     // actual paint
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    console.log(rowCells);
     const grid = getRandomGrid();
     generation(ctx, grid, boardSize, cellSize, framesPerSecond);
 };

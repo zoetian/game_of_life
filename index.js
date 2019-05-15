@@ -8,7 +8,7 @@ const getRandomGrid = () => {
         }
     }
     return grid;
-};
+}
 
 const drawGrid = (ctx, grid, cellSize) => {
     ctx.strokeStyle = cellStrokeColor.value;
@@ -22,7 +22,7 @@ const drawGrid = (ctx, grid, cellSize) => {
             ctx.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
         }
     }
-};
+}
 
 const countNei = (grid, x, y) => {
     let cnt = 0;
@@ -36,7 +36,7 @@ const countNei = (grid, x, y) => {
     }
     cnt -= grid[x][y];
     return cnt;
-};
+}
 
 const getNextGenGrid = (grid) => {
     const nextGrid = new Array(grid.length);
@@ -55,32 +55,30 @@ const getNextGenGrid = (grid) => {
         }
     }
     return nextGrid;
-};
+}
 
 const generation = (ctx, grid) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    var boardSize = parseInt(document.getElementById('boardSizeInput').value);
-    var rowCells = parseInt(document.getElementById('rowCells').value);
-    var cellSize = boardSize / rowCells;
+    let boardSize = parseInt(document.getElementById('boardSizeInput').value);
+        rowCells = parseInt(document.getElementById('rowCells').value),
+        cellSize = boardSize / rowCells;
     drawGrid(ctx, grid, cellSize);
     const nextGenrationGrid = getNextGenGrid(grid);
 
-    var fps = (document.getElementById('fps').value);
+    let fps = (document.getElementById('fps').value);
     setTimeout(() => {
         requestAnimationFrame(() => generation(ctx, nextGenrationGrid))
     }, 1000/ fps);
-};
+}
 
 const paint = () => {
-
-    var cellStrokeColor = (document.getElementById('cellStrokeColor').value);
-    var cellFillColor = (document.getElementById('cellFillColor').value);
-
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const grid = getRandomGrid();
+    let cellStrokeColor = (document.getElementById('cellStrokeColor').value),
+        cellFillColor = (document.getElementById('cellFillColor').value),
+        canvas = document.getElementById('canvas'),
+        ctx = canvas.getContext('2d'),
+        grid = getRandomGrid();
     generation(ctx, grid);
-};
+}
 
 window.onload = paint;
 
@@ -88,9 +86,10 @@ window.onresize = () => {
     const ctx = canvas.getContext('2d');
     ctx.canvas.width = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
-};
+}
 
-var timeout = null;
+// debounce text input
+let timeout = null;
 document.addEventListener('input', e => {
     if (e.target.matches('input')) {
         e.target.onkeyup = (e) => {
@@ -98,4 +97,4 @@ document.addEventListener('input', e => {
             timeout = setTimeout(() => {}, 200);
         };
     }
-});
+})

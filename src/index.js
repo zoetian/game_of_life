@@ -57,11 +57,17 @@ const getNextGenGrid = (grid) => {
     return nextGrid;
 };
 
-const generation = (ctx, grid, boardSize, cellSize, framesPerSecond) => {
+const generation = (ctx, grid, boardSize, cellSize, fps) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid(ctx, grid, cellSize);
     const nextGenrationGrid = getNextGenGrid(grid);
-    requestAnimationFrame(() => generation(ctx, nextGenrationGrid, boardSize, cellSize, framesPerSecond))
+    console.log('[curr fps] ', fps);
+    requestAnimationFrame(() => generation(ctx, nextGenrationGrid, boardSize, cellSize, fps))
+
+    // setTimeout(() => {
+    //     requestAnimationFrame(() => generation(ctx, nextGenrationGrid, boardSize, cellSize, fps))
+    //     console.log('[curr fps] ', fps);
+    // }, 1000/ fps);
 };
 
 const paint = () => {
@@ -70,13 +76,13 @@ const paint = () => {
     const cellSize = boardSize / rowCells;
     const cellStrokeColor = (document.getElementById('cellStrokeColor').value);
     const cellFillColor = (document.getElementById('cellFillColor').value);
-    const framesPerSecond = (document.getElementById('framesPerSecond').value);;
+    const fps = (document.getElementById('framesPerSecond').value);;
 
     // actual paint
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const grid = getRandomGrid();
-    generation(ctx, grid, boardSize, cellSize, framesPerSecond);
+    generation(ctx, grid, boardSize, cellSize, fps);
 };
 
 window.onload = paint;

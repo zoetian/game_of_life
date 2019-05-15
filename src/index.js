@@ -57,31 +57,29 @@ const getNextGenGrid = (grid) => {
     return nextGrid;
 };
 
-const generation = (ctx, grid, boardSize, cellSize, fps) => {
+const generation = (ctx, grid) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var boardSize = parseInt(document.getElementById('boardSizeInput').value);
+    var rowCells = parseInt(document.getElementById('rowCells').value);
+    var cellSize = boardSize / rowCells;
     drawGrid(ctx, grid, cellSize);
     const nextGenrationGrid = getNextGenGrid(grid);
-    console.log('[out fps] ', fps);
 
+    var fps = (document.getElementById('fps').value);
     setTimeout(() => {
-        console.log('[in fps] ', fps);
-        requestAnimationFrame(() => generation(ctx, nextGenrationGrid, boardSize, cellSize, fps))
+        requestAnimationFrame(() => generation(ctx, nextGenrationGrid))
     }, 1000/ fps);
 };
 
 const paint = () => {
-    const boardSize = parseInt(document.getElementById('boardSizeInput').value);
-    const rowCells = parseInt(document.getElementById('rowCells').value);
-    const cellSize = boardSize / rowCells;
-    const cellStrokeColor = (document.getElementById('cellStrokeColor').value);
-    const cellFillColor = (document.getElementById('cellFillColor').value);
-    const fps = (document.getElementById('framesPerSecond').value);;
 
-    // actual paint
+    var cellStrokeColor = (document.getElementById('cellStrokeColor').value);
+    var cellFillColor = (document.getElementById('cellFillColor').value);
+
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const grid = getRandomGrid();
-    generation(ctx, grid, boardSize, cellSize, fps);
+    generation(ctx, grid);
 };
 
 window.onload = paint;
@@ -97,12 +95,7 @@ document.addEventListener('input', e => {
     if (e.target.matches('input')) {
         e.target.onkeyup = (e) => {
             clearTimeout(timeout);
-            // Make a new timeout set to go off in 800ms
-            timeout = setTimeout(function () {
-                console.log('Input Value:', e.target.value);
-                console.log('xxxxxxxx shall repaint xxxxxxxxxxx');
-                paint();
-            }, 800);
+            timeout = setTimeout(() => {}, 200);
         };
     }
 });

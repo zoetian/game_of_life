@@ -6,7 +6,7 @@
 </head>
 <body>
     <div id="wrapper">
-        <div id="fps">
+        <div id="ctrl">
             <div>
                 <st>Board Size:</st>
                 <input type="text" id="boardSizeInput" placeholder="e.g. 600" value="600">
@@ -25,7 +25,7 @@
             </div>
             <div>
                 <st>FPS:</st>
-                <input type="text" id="framesPerSecond" placeholder="e.g. 5" value="5">
+                <input type="text" id="fps" placeholder="e.g. 5" value="5">
             </div>
         </div>
         <canvas id="canvas" height="1000px" width="1000px"></canvas>
@@ -39,7 +39,7 @@
             min-height: 300px;
             margin: 0 auto;
         }
-        #wrapper, #fps, #canvas{
+        #wrapper, #ctrl, #canvas{
             padding: 10px;
             -webkit-flex: 1; /* Safari */
             -ms-flex: 1; /* IE 10 */
